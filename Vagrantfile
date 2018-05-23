@@ -3,16 +3,21 @@
 
 Vagrant.configure("2") do |config|
   config.vm.define "rhel" do |rhel|
-        config.vm.box = "generic/rhel7"
-	rhel.vm.network "forwarded_port", guest: 80, host: 8081
+        rhel.vm.box = "generic/rhel7"
+	#rhel.vm.network "forwarded_port", guest: 80, host: 8081
+	#rhel.vm.provision "file", source: "jdk-8-linux-x64.rpm", destination: "/home/vagrant/jdk-8-linux-x64.rpm"
+	rhel.vm.network "private_network", ip: "172.17.177.21"
 	rhel.vm.provider :virtualbox do |vb|
 		vb.customize [ 'modifyvm', :id, '--memory', '1024' ]
 		vb.customize [ 'modifyvm', :id, '--cpus', '2' ]
 		vb.customize [ 'modifyvm', :id, '--name', 'rhel' ]
   	end
-	#config.vm.provision "shell", inline: "sudo dnf update -y"
-	#config.vm.provision "shell", inline: "sudo dnf install openvpn easy-rsa nano -y"
-	#config.vm.provision "shell", inline: "sudo dnf install firewalld -y"
+	
+	config.vm.provision :ansible do |ansible|
+    		#ansible.playbook = "playbook-jdk.yml"
+    		ansible.playbook = "playbook-jdk.yml-copy2"
+		ansible.verbose = "vvv"
+  	end	
+
   end
-  
 end

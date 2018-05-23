@@ -1,0 +1,21 @@
+---
+- hosts: all
+  become_user: vagrant 
+  become: yes
+  vars:
+    download_url: http://download.oracle.com/otn-pub/java/jdk/8u5-b13/jdk-8u5-linux-x64.tar.gz
+    download_folder: /opt
+    java_name: "{{download_folder}}/jdk1.8.0_05"
+    java_archive: "{{download_folder}}/jdk-8u5-linux-x64.tar.gz"
+
+  tasks:
+  - name: Download Java
+    get_url: #command: "curl -L -O https://github.com/google/protobuf/releases/download/v2.5.0/protobuf-2.5.0.tar.gz"
+      url: https://github.com/google/protobuf/releases/download/v2.5.0/protobuf-2.5.0.tar.gz
+      dest: /home/vagrant/protobuf-2.5.0.tar.gz
+
+  - name: Unarchive protobuf
+    unarchive: 
+      src: /home/vagrant/protobuf-2.5.0.tar.gz
+      dest: /home/vagrant
+      remote_src: yes
