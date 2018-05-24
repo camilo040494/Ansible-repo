@@ -9,15 +9,24 @@
     java_archive: "{{download_folder}}/jdk-8u5-linux-x64.tar.gz"
 
   tasks:
+  - name: Copy Java
+    copy: 
+      src: jdk-8u151-linux-x64.rpm
+      dest: /home/vagrant/jdk-8-linux-x64.rpm
+
+  - name: Install Java
+    yum:
+      name: /home/vagrant/jdk-8-linux-x64.rpm
+      state: present
+
   - name: Copying environment variables
     copy:  
-      src: hadoop.sh
-      dest: /etc/profile.d/hadoop.sh
+      src: hadoop-env.sh
+      dest: $HADOOP_COMMON_HOME/hadoop-env.sh
    
-  tasks:
   - name: Copying template for hadoop environment variable
     template:  
-      src: hadoop.sh #This file must be placed in the templates direcoty
+      src: hadoop.sh.j2 #This file must be placed in the templates directory
       dest: /etc/profile.d/hadoop.sh
 
   #- name: Download Java
