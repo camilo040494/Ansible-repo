@@ -15,7 +15,7 @@ Vagrant.configure("2") do |config|
 	
 	config.vm.provision :ansible do |ansible|
     		#ansible.playbook = "playbook-jdk.yml"
-    		ansible.playbook = "playbook-jdk.yml-copy2"
+    		ansible.playbook = "playbook-jdk.yml-copy3"
 		ansible.verbose = "vvv"
   	end	
 

@@ -1,6 +1,7 @@
 ---
 - hosts: all
-  become_user: vagrant 
+  #become_user: vagrant 
+  become_user: root #For the unarchive of Hadoop 
   become: yes
   vars:
     download_url: http://download.oracle.com/otn-pub/java/jdk/8u5-b13/jdk-8u5-linux-x64.tar.gz
@@ -9,13 +10,32 @@
     java_archive: "{{download_folder}}/jdk-8u5-linux-x64.tar.gz"
 
   tasks:
-  - name: Download Java
-    get_url: #command: "curl -L -O https://github.com/google/protobuf/releases/download/v2.5.0/protobuf-2.5.0.tar.gz"
-      url: https://github.com/google/protobuf/releases/download/v2.5.0/protobuf-2.5.0.tar.gz
-      dest: /home/vagrant/protobuf-2.5.0.tar.gz
+  #- name: Download Procolbuffer 
+  #  get_url: #command: "curl -L -O https://github.com/google/protobuf/releases/download/v2.5.0/protobuf-2.5.0.tar.gz"
+  #    url: https://github.com/google/protobuf/releases/download/v2.5.0/protobuf-2.5.0.tar.gz
+  #    dest: /home/vagrant/protobuf-2.5.0.tar.gz
 
-  - name: Unarchive protobuf
+  #- name: Unarchive protobuf
+  #  unarchive: 
+  #    src: /home/vagrant/protobuf-2.5.0.tar.gz
+  #    dest: /home/vagrant
+  #    remote_src: yes
+
+#  - name: Download Hadoop
+#    get_url: 
+#      url: https://archive.apache.org/dist/hadoop/core/hadoop-2.7.3/hadoop-2.7.3.tar.gz
+#      dest: /home/vagrant/hadoop-2.7.3.tar.gz
+#      timeout: 500
+
+  - name: Unarchive hadoop
     unarchive: 
-      src: /home/vagrant/protobuf-2.5.0.tar.gz
-      dest: /home/vagrant
+      src: /home/vagrant/hadoop-2.7.3.tar.gz
+      dest: /usr/lib/
       remote_src: yes
+      mode: 0777
+      creates: /usr/lib/hadoop-2.7.3
+      owner: vagrant
+      group: vagrant
+
+  - name: Rename hadoop folder
+    shell: mv /usr/lib/hadoop-2.7.3 /usr/lib/hadoop
