@@ -1,8 +1,12 @@
-- name: install epel-repo rpm
-  yum: name=epel-release state=installed
-
+#- name: install epel-repo rpm
+#  yum: name=epel-release state=installed
 - name: install git redhat/centos
   yum: name=git state=latest
-
-- name: install development tools redhat/centos
-  yum: name='@Development tools' state=present
+- name: Download Java
+  get_url: 
+    url: http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.rpm
+    dest: /home/vagrant/jdk-8-linux-x64.rpm
+    headers: 'Cookie:oraclelicense=accept-securebackup-cookie'
+    timeout: 3000
+#- name: install development tools redhat/centos
+#  yum: name='@Development tools' state=present
