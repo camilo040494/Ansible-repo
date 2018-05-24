@@ -1,0 +1,8 @@
+- name: install epel-repo rpm
+  yum: name=epel-release state=installed
+
+- name: install git redhat/centos
+  yum: name=git state=latest
+
+- name: install development tools redhat/centos
+  yum: name='@Development tools' state=present
