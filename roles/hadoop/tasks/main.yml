@@ -1,0 +1,20 @@
+---
+- name: Download Hadoop
+  get_url: 
+    url: https://archive.apache.org/dist/hadoop/core/hadoop-2.7.3/hadoop-2.7.3.tar.gz
+    dest: /home/ec2-user/hadoop-2.7.3.tar.gz
+    timeout: 500
+
+#  - name: Unarchive hadoop
+#    unarchive: 
+#      src: /home/vagrant/hadoop-2.7.3.tar.gz
+#      dest: /usr/lib/
+#      remote_src: yes
+#      mode: 0777
+#      creates: /usr/lib/hadoop-2.7.3
+#      owner: vagrant
+#      group: vagrant
+
+- name: Rename hadoop folder
+  shell: hostname
+#   shell: mv /usr/lib/hadoop-2.7.3 /usr/lib/hadoop
