@@ -1,3 +1,0 @@
-{% for i in groups['Client'] %}
-   slave{{ i.index|int }}
-{% endfor %}
