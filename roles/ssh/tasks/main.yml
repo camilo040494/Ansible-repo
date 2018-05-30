@@ -29,6 +29,9 @@
   loop_control:
     index_var: my_idx
 
+- name: Debug hostvars
+  debug: var=hostvars
+
 - name: Append ssh public key
   lineinfile:
     path: "/home/{{ user }}/.ssh/authorized_keys"
