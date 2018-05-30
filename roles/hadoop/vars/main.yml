@@ -1,0 +1,4 @@
+master_name: master
+hdfs_directory: /home/ec2/hdfs/
+hadoop_directory: /usr/lib/hadoop/
+replication: 1
