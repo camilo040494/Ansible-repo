@@ -25,8 +25,10 @@
 
     - name: Add new instance to host group
       add_host:
+        name: master_node
         hostname: "ec2-user@{{ ec2_master.instances.0.dns_name }}"
         ansible_ssh_private_key_file: "{{ key_directory }}"
+        ansible_host: "ec2-user@{{ ec2_master.instances.0.dns_name }}"
         groupname: master
 
     - name: Wait for SSH to come up
@@ -81,7 +83,7 @@
 
 - name: Configure master(s)
   hosts: master
-  become_user: ec2-user
+  become_user: root
   become: True
   gather_facts: True
   roles:
@@ -91,7 +93,7 @@
 
 - name: Configure slave(s)
   hosts: slaves
-  become_user: ec2-user
+  become_user: root
   become: True
   gather_facts: True
   roles:
