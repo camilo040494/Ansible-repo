@@ -17,6 +17,9 @@
 #- name: Debug hostsvars
 #  debug: var=hostvars
 
+- name: Erase everything from /etc/hosts
+  shell: "cat /dev/null > /etc/hosts"
+
 - name: Append master to etc/hosts
   lineinfile:
     path: /etc/hosts
