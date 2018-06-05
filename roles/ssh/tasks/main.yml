@@ -11,11 +11,11 @@
     state: present
     line: "RSAAuthentication yes"
 
-- name: Debug groups
-  debug: var=groups
+#- name: Debug groups
+#  debug: var=groups
 
-- name: Debug hostsvars
-  debug: var=hostvars
+#- name: Debug hostsvars
+#  debug: var=hostvars
 
 - name: Append master to etc/hosts
   lineinfile:
