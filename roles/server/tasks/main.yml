@@ -18,6 +18,29 @@
     create: yes
     mode: 0400
 
+#- name: Copying lib artifacts
+#  copy:
+#    src: lib
+#    dest: "/home/{{ user }}/"
+#    owner: root
+#    group: root
+#    mode: 0777
+
+#- name: Copying util executable files and process
+#  copy:
+#    src: util/
+#    dest: "/home/{{ user }}/"
+#    owner: "{{ user }}"
+#    group: "{{ user }}"
+#    mode: +x
+
+#- name: Copying util executable files and process
+#  copy:
+#    src: wordcount-hadoop-1.0-SNAPSHOT.jar
+#    dest: "/home/{{ user }}/"
+#    owner: "{{ user }}"
+#    group: "{{ user }}"
+
 #- debug: var=public_key
 
 - set_fact:

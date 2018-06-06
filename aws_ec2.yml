@@ -15,7 +15,7 @@
         image: "{{ami_id}}"
         #assign_public_ip: yes
         wait: yes
-        #vpc_subnet_id: "{{ vpc_id }}"
+        vpc_subnet_id: "{{ vpc_id }}"
         volumes:
         - device_name: "{{volumes.device_name}}"
           volume_type: "{{volumes.volume_type}}"
@@ -55,7 +55,7 @@
         image: "{{ami_id}}"
         #assign_public_ip: yes
         wait: yes
-        #vpc_subnet_id: "{{ vpc_id }}"
+        vpc_subnet_id: "{{ vpc_id }}"
         volumes:
         - device_name: "{{volumes.device_name}}"
           volume_type: "{{volumes.volume_type}}"
