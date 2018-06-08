@@ -1,0 +1,19 @@
+- name: Download Java
+  get_url: 
+    url: "{{ download_url }}"
+    dest: "/home/{{ user }}/{{ name_java }}"
+    headers: 'Cookie:oraclelicense=accept-securebackup-cookie'
+    timeout: 300
+
+- name: Install Java
+  yum: 
+    name: "/home/{{ user }}/{{ name_java }}"
+    state: present
+
+- name: Copying Java default configuration file for env
+  copy:
+    src: aws-apitools-common.sh
+    dest: /etc/profile.d/aws-apitools-common.sh
+    owner: root
+    group: root
+    mode: '0644'

@@ -1,0 +1,48 @@
+---
+- name: Start Master node
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  tasks:
+    - name: Create ec2 instaces
+      ec2:
+        aws_access_key: "{{aws_access_key}}"
+        aws_secret_key: "{{aws_secret_key}}"
+        key_name: "{{key_name}}"
+        region: "{{aws_region}}"
+        group_id: "{{group_id}}"
+        instance_type: "{{instance_type}}"
+        image: "{{ami_id}}"
+        #assign_public_ip: yes
+        wait: yes
+        vpc_subnet_id: "{{ vpc_id }}"
+        volumes:
+        - device_name: "{{volumes.device_name}}"
+          volume_type: "{{volumes.volume_type}}"
+          volume_size: "{{volumes.volume_size}}"
+      register: ec2_master
+
+    - name: Add new instance to host group
+      add_host:
+        name: master_node
+        hostname: "ec2-user@{{ ec2_master.instances.0.dns_name }}"
+        ansible_ssh_private_key_file: "{{ key_directory }}"
+        ansible_host: "ec2-user@{{ ec2_master.instances.0.dns_name }}"
+        groupname: master
+
+    - name: Wait for SSH to come up
+      wait_for:
+        host: "{{ ec2_master.instances.0.dns_name }}"
+        port: 22
+        delay: 60
+        timeout: 320
+        state: started
+
+- name: Configure master(s)
+  hosts: master
+  become_user: root
+  become: True
+  gather_facts: True
+  roles:
+    - java_install
+    - hadoop_install

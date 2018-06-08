@@ -1,0 +1,42 @@
+- name: Download Hadoop
+  get_url: 
+    url: https://archive.apache.org/dist/hadoop/core/hadoop-2.7.3/hadoop-2.7.3.tar.gz
+    dest: /home/{{ user }}/hadoop-2.7.3.tar.gz
+    timeout: 500
+
+#- name: "Create Hadoop directory"
+#  file: 
+#    path=/usr/lib/hadoop 
+#    state: directory 
+#    owner: nobody 
+#    group: nogroup 
+#    mode: '0755'
+
+- name: Unarchive hadoop
+  unarchive: 
+    src: "/home/{{ user }}/hadoop-2.7.3.tar.gz"
+    dest: /usr/lib/
+    remote_src: yes
+    mode: 0777
+    creates: /usr/lib/hadoop-2.7.3
+    owner: root
+    group: root
+
+- name: Rename hadoop folder
+  command: mv /usr/lib/hadoop-2.7.3 /usr/lib/hadoop
+
+- name: Copying hadoop configuration env file to /etc/profile.d/
+  copy:
+    src: hadoop.sh
+    dest: /etc/profile.d/hadoop.sh
+    owner: root
+    group: root
+    mode: '0644'
+
+#- name: "Copying Hadoop binaries"
+#    copy: 
+#      src= /hadoop.tar.gz 
+#      dest= /usr/lib/hadoop/hadoop.tar.gz 
+#      owner: nobody 
+#      group: nogroup 
+#      mode: '0755'
