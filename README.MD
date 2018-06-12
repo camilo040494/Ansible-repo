@@ -13,3 +13,11 @@ Or use the -vvv flag for seeing the out logs.
 ```
 ansible-playbook -i inventory/hosts aws_ec2.yml -vvv
 ```
+
+Remember to set the 
+
+Export it
+```
+export ANSIBLE_HOST_KEY_CHECKING=False
+```
+Or set it permanent, [here](https://stackoverflow.com/questions/32297456/how-to-ignore-ansible-ssh-authenticity-checking) can be consult how
