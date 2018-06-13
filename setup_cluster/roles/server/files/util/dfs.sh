@@ -1,3 +1,3 @@
 #!/bin/bash
-hdfs dfsadmin -safemode leave && hadoop fs -mkdir -p /user/ec2-user/less && hadoop fs -put data/words* less
+hdfs dfsadmin -safemode leave && hadoop fs -mkdir -p /user/ec2-user/less && hadoop fs -put ~/data/words* less
 
