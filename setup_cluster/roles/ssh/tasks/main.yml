@@ -34,7 +34,7 @@
     create: yes
     state: present
     line: "{{ item }}\tslave{{my_idx|int+1}}"
-  with_items: "{{ ip_addresses }}"
+  with_sequence: start="{{ initial_ip }}" end="{{ latest_ip }}" stride=1 format="{{ group_ip }}%d"
   loop_control:
     index_var: my_idx
 

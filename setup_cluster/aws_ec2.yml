@@ -60,8 +60,8 @@
         - device_name: "{{volumes.device_name}}"
           volume_type: "{{volumes.volume_type}}"
           volume_size: "{{volumes.volume_size}}"
-        private_ip: "{{item}}"
-      with_items: "{{ip_addresses}}"
+        private_ip: "{{ item }}"
+      with_sequence: start="{{ initial_ip }}" end="{{ latest_ip }}" stride=1 format="{{ group_ip }}%d"
       register: ec2
 
     - name: Add new instance to host group
