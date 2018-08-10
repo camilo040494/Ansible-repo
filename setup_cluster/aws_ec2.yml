@@ -26,14 +26,14 @@
     - name: Add new instance to host group
       add_host:
         name: master_node
-        hostname: "ec2-user@{{ ec2_master.instances.0.dns_name if ec2_master.instances.0.dns_name|length>0 else ec2_master.instances.0.public_dns }}"
+        hostname: "ec2-user@{{ ec2_master.instances.0.dns_name if ec2_master.instances.0.dns_name|length>0 else ec2_master.instances.0.public_ip }}"
         ansible_ssh_private_key_file: "{{ key_directory }}"
-        ansible_host: "ec2-user@{{ ec2_master.instances.0.dns_name if ec2_master.instances.0.dns_name|length>0 else ec2_master.instances.0.public_dns }}"
+        ansible_host: "ec2-user@{{ ec2_master.instances.0.dns_name if ec2_master.instances.0.dns_name|length>0 else ec2_master.instances.0.public_ip }}"
         groupname: master
 
     - name: Wait for SSH to come up
       wait_for:
-        host: "{{ ec2_master.instances.0.dns_name if ec2_master.instances.0.dns_name|length>0 else ec2_master.instances.0.public_dns }}"
+        host: "{{ ec2_master.instances.0.dns_name if ec2_master.instances.0.dns_name|length>0 else ec2_master.instances.0.public_ip }}"
         port: 22
         delay: 60
         timeout: 320
@@ -66,14 +66,14 @@
 
     - name: Add new instance to host group
       add_host:
-        hostname: "ec2-user@{{ item.instances.0.dns_name if item.instances.0.dns_name|length>0 else item.instances.0.public_dns }}"
+        hostname: "ec2-user@{{ item.instances.0.dns_name if item.instances.0.dns_name|length>0 else item.instances.0.public_ip }}"
         ansible_ssh_private_key_file: "{{ key_directory }}"
         groupname: slaves
       with_items: "{{ ec2.results }}"
 
     - name: Wait for SSH to come up
       wait_for:
-        host: "{{ item.instances.0.dns_name if item.instances.0.dns_name|length>0 else item.instances.0.public_dns }}"
+        host: "{{ item.instances.0.dns_name if item.instances.0.dns_name|length>0 else item.instances.0.public_ip }}"
         port: 22
         delay: 60
         timeout: 320
