@@ -80,6 +80,25 @@
         state: started
       with_items: "{{ ec2.results }}"
 
+- name: Configure master's hostname
+  hosts: master
+  become: True
+  become_user: root
+  tasks:
+    - hostname:
+        name: master
+
+- name: Configure slave's hostname
+  hosts: slaves
+  become: True
+  become_user: root
+  gather_facts: True
+  tasks:
+    - hostname:
+        name: "slave{{ play_hosts.index(inventory_hostname)|int+1 }}"
+    #- debug: msg="{{ play_hosts.index(inventory_hostname) }}"
+    #- debug: msg="{{ inventory_hostname }}"
+
 - name: Configure master(s)
   hosts: master
   become_user: root
